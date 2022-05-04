@@ -1,0 +1,16 @@
+name: Data actions
+on: [push]
+jobs:
+  Build docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Get sha short
+        id: vars
+        run: echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
+      - name: Build the tagged Docker image
+        run: docker build . --file Dockerfile --tag hetic/dataset:${{steps.vars.outputs.sha_short}}
+      - name: Push the tagged Docker image
+        run: docker push hetic/dataset:${{steps.vars.outputs.sha_short}}
