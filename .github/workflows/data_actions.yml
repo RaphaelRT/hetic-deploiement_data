@@ -22,19 +22,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
-      #- name: Login to DockerHub Registry
-      #  run: echo ${{ secrets.Docker.DOCKERHUB_USERNAME}} | docker login -u ${{ secrets.Docker.DOCKERHUB_TOKEN  }} --password-stdin
-      - name: Login to Docker Hub
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: docker login -u $DOCKER_USER -p $DOCKERHUB_TOKEN
-        
-      #- name: Get sha short
-      #  id: vars
-      #  run: echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
-      #- name: Build the tagged Docker image
-      #  run: docker build . --file Dockerfile --tag hetic/dataset:${{steps.vars.outputs.sha_short}}
-      #- name: Push the tagged Docker image
-      #  run: docker push hetic/dataset:${{steps.vars.outputs.sha_short}}
+      - uses: actions/checkout@v3
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_USERNAME}} | docker login -u ${{ secrets.DOCKERHUB_TOKEN  }} --password-stdin
+      - name: Get sha short
+        id: vars
+        run: echo ::set-output name=sha_short::$(git rev-parse --short HEAD)
+      - name: Build the tagged Docker image
+        run: docker build . --file Dockerfile --tag hetic/dataset:${{steps.vars.outputs.sha_short}}
+      - name: Push the tagged Docker image
+        run: docker push hetic/dataset:${{steps.vars.outputs.sha_short}}
