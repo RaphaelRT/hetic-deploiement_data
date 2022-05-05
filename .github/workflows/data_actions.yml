@@ -52,7 +52,8 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest}}
 
   call-train:
-    uses: raphaelrt/hetic-deploiement_train/.github/workflows/train_actions.yml@main
-    with:
-      sha: ${{ jobs.build.steps.vars.outputs.sha_short }}
+    steps:
+      - uses: raphaelrt/hetic-deploiement_train/.github/workflows/train_actions.yml@main
+        with:
+          sha: ${{ jobs.build.steps.vars.outputs.sha_short }}
 
