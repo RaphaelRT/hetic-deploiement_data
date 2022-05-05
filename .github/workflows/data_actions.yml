@@ -51,6 +51,7 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest}}
       - name: curl
-        run: curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" --request POST --data '{"event_type": "train_trigger", "client_payload": { "version": "1.2.3"}}' https://api.github.com/repos/RaphaelRT/hetic-deploiement_train/dispatches
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" --request POST --data '{"event_type": "train_trigger", "client_payload": { "version": "1.2.3"}}' https://api.github.com/repos/RaphaelRT/hetic-deploiement_train/dispatches
 
 
