@@ -54,11 +54,7 @@ jobs:
         uses: wei/curl@v1
         with:
           args: |
-            -H "Accept: application/vnd.github.everest-preview+json"
-            -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}"
-            --request POST
-            --data '{"event_type": "do-something"}'
-            https://api.github.com/repos/n8ebel/GitHubActionsAutomationSandbox/dispatches
+            -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" --request POST --data '{"event_type": "do-something"}' https://api.github.com/repos/n8ebel/GitHubActionsAutomationSandbox/dispatches
 
 
 
