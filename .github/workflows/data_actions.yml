@@ -51,3 +51,8 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest}}
 
+  call-train:
+    uses: raphaelrt/hetic-deploiement_train/.github/workflows/train_actions.yml@main
+    with:
+      sha: ${{ steps.vars.outputs.sha_short }}
+
