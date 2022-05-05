@@ -50,14 +50,15 @@ jobs:
             raphaelrt/hetic-deploiement_data:${{ steps.vars.outputs.sha_short }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest}}
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
+      - name: curl
+        uses: wei/curl@v1
         with:
-          route: POST /repos/RaphaelRT/hetic-deploiement_train/dispatches
-          owner: RaphaelRT
-          repo: hetic-deploiement_train
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-
+          args: |
+            -X POST
+            -H "Accept: application/vnd.github.v3+json"
+            -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+            --request POST
+            --data '{"event_type": "train_trigger", "client_payload": { "version": "1.2.3"}}'
+            https://api.github.com/repos/RaphaelRT/hetic-deploiement_train/dispatches
 
 
